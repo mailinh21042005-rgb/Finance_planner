@@ -1,4 +1,30 @@
+# Local environment variables and secrets
 .env*
 !.env.example
+
+# Private keys and credentials
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+credentials*.json
+service-account*.json
+*-service-account.json
+secrets/
+
+# Local databases, backups, and logs
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.backup
+*.bak
+*.log
+
+# Local build and tool output
+.next/
+.vercel/
 /generated/prisma
 node_modules
