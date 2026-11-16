@@ -3,7 +3,8 @@
     "@types/node": "^26.6.6",
     "@types/pg": "^8.23.1",
     "prisma": "^7.10.1",
-    "tsx": "^4.23.15"
+    "tsx": "^4.23.15",
+    "typescript": "7.0.2"
   },
   "name": "finance_planner",
   "version": "1.0.0",
@@ -67,6 +68,7 @@
     "lru.min": "^1.1.5",
     "mysql2": "^3.24.4",
     "named-placeholders": "^1.1.6",
+    "next": "^16.4.6",
     "ohash": "^2.0.12",
     "path-key": "^3.1.1",
     "pathe": "^2.0.3",
@@ -116,7 +118,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/mailinh21042005-rgb/Finance_planner/issues"
   },
