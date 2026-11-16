@@ -46,6 +46,12 @@ export const ROWS: Row[] = [
   { type: 'EXPENSE', amount: 40_000, description: 'Trà sữa', category: 'FOOD', date: d(0, 6) },
   { type: 'EXPENSE', amount: 199_000, description: 'Gói nghe nhạc', category: 'OTHER', date: d(0, 7) },
   { type: 'EXPENSE', amount: 650_000, description: 'Đi chợ cả tuần', category: 'FOOD', date: d(0, 8) },
+  { type: 'EXPENSE', amount: 300_000, description: 'Quà chia tay tiệc đồng nghiệp', category: 'OTHER', date: d(0, 9) },
+  { type: 'EXPENSE', amount: 80_000, description: 'Đổ xăng', category: 'TRANSPORT', date: d(0, 10) },
+  { type: 'EXPENSE', amount: 360_000, description: 'Tiệc chia tay', category: 'FOOD', date: d(0, 11) },
+  { type: 'EXPENSE', amount: 1_200_000, description: 'Đi chợ cả tuần', category: 'FOOD', date: d(0, 12) },
+  { type: 'EXPENSE', amount: 90_000, description: 'Grab đi học', category: 'TRANSPORT', date: d(0, 13) },
+  { type: 'EXPENSE', amount: 150_000, description: 'Cà phê cùng bạn', category: 'FOOD', date: d(0, 14) },
 ];
 
 export const WISHLIST: { name: string; cost: number; priority: Priority }[] = [
