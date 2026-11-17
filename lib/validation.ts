@@ -39,3 +39,16 @@ export function readValues(data: FormData): Values {
     fields.map((f) => [f, String(data.get(f) ?? "")]),
   );
 }
+
+// Bộ lọc đọc từ URL: /transactions?range=…&type=…
+export const RANGES =
+  ["this-month", "last-month", "all"] as const;
+
+export const transactionFilterSchema = z.object({
+  range: z.enum(RANGES).default("this-month"),
+  type: z.enum(TransactionType).optional(),
+  category: z.enum(Category).optional(),
+});
+
+export type Filters =
+  z.infer<typeof transactionFilterSchema>;

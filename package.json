@@ -1,10 +1,13 @@
 {
   "devDependencies": {
-    "@types/node": "^26.6.6",
+    "@types/node": "^22.20.5",
     "@types/pg": "^8.23.1",
+    "jsdom": "^31.0.1",
     "prisma": "^7.10.1",
     "tsx": "^4.23.15",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^5.1.0"
   },
   "name": "finance_planner",
   "version": "1.0.0",
@@ -110,7 +113,7 @@
     "zod": "^4.6.7"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",
