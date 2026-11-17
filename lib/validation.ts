@@ -14,7 +14,11 @@ export const transactionSchema = z.object({
     .max(120, { error: "Tối đa 120 ký tự" }),
   category: z.enum(Category,
     { error: "Chọn danh mục" }),
-  date: z.iso.date({ error: "Ngày không hợp lệ" }),
+  date: z.iso.date({ error: "Ngày không hợp lệ" })
+    .refine((val) => {
+      const today = new Date().toISOString().split('T')[0];
+      return val <= today;
+    }, { message: "Ngày không được ở tương lai" }),
 });
 
 type Field = keyof z.infer<typeof transactionSchema>;
