@@ -43,3 +43,11 @@ export function crossedMilestones(
   return MILESTONES.filter(
     (m) => prev < m && next >= m);
 }
+
+export function calculateBalance(
+  transactions: Array<{ type: "INCOME" | "EXPENSE"; amount: number }>,
+): number {
+  return transactions.reduce((acc, t) => {
+    return t.type === "INCOME" ? acc + t.amount : acc - t.amount;
+  }, 0);
+}
