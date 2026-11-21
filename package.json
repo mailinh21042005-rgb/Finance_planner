@@ -14,10 +14,12 @@
   "description": "Manage your finance",
   "main": "index.js",
   "dependencies": {
+    "@better-auth/prisma-adapter": "^1.7.27",
     "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "ajv": "^8.20.0",
     "aws-ssl-profiles": "^1.1.2",
+    "better-auth": "^1.7.27",
     "better-result": "^2.10.0",
     "c12": "^3.3.4",
     "chokidar": "^5.0.0",

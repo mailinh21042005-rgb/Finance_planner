@@ -1,12 +1,13 @@
 import * as z from "zod";
 import {
-  Category, TransactionType,
+  Category, Priority, TransactionType,
 } from "../generated/prisma/enums";
 
 export const transactionSchema = z.object({
   type: z.enum(TransactionType,
     { error: "Chọn loại giao dịch" }),
-  amount: z.coerce.number()
+  amount: z.coerce
+    .number({ error: "Số tiền không hợp lệ"})
     .int({ error: "Phải là số nguyên" })
     .positive({ error: "Phải lớn hơn 0" }),
   description: z.string().trim()
@@ -16,9 +17,20 @@ export const transactionSchema = z.object({
     { error: "Chọn danh mục" }),
   date: z.iso.date({ error: "Ngày không hợp lệ" })
     .refine((val) => {
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toLocaleDateString("en-CA");
       return val <= today;
     }, { message: "Ngày không được ở tương lai" }),
+});
+
+export const wishlistSchema = z.object({
+  name: z.string().trim()
+    .min(1, { error: "Nhập tên món đồ: " })
+    .max(120, { error: "Tối đa 120 ký tự" }),
+  cost: z.coerce
+    .number({ error: "Số tiền không hợp lệ"})
+    .int({ error: "Giá phải là số nguyên VND" })
+    .positive({ error: "Giá phải lớn hơn 0" }),
+  priority: z.enum(Priority, { error: "Chọn mức ưu tiên" }).default(Priority.MEDIUM),
 });
 
 type Field = keyof z.infer<typeof transactionSchema>;
