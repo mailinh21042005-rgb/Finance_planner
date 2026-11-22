@@ -5,6 +5,7 @@ import * as z from "zod";
 import {
   readValues, transactionSchema, type FormState,
 } from "../../lib/validation";
+import { requireUser } from "../../lib/dal";
 
 export async function createTransaction(
   _prev: FormState,
@@ -16,16 +17,13 @@ export async function createTransaction(
     const flat = z.flattenError(parsed.error);
     return { errors: flat.fieldErrors, values };
   }
-  // Tạm dùng user mẫu; tuần 10 đổi sang requireUser()
-  const demo = await prisma.user.findFirstOrThrow({
-    where: { email: "demo@phy10615.vn" },
-  });
+  const user = await requireUser();
 
   await prisma.transaction.create({
     data: {
       ...parsed.data,
       date: new Date(parsed.data.date), // chuỗi -> Date
-      userId: demo.id,
+      userId: user.id,
     },
   });
 
