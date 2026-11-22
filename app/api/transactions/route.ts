@@ -1,9 +1,18 @@
 import type { NextRequest } from "next/server";
 import { prisma } from "../../../lib/prisma";
 import { getDateRange } from "../../../lib/finance";
+import { getSession } from "../../../lib/dal";
 import { transactionFilterSchema } from "../../../lib/validation";
 
 export async function GET(request: NextRequest) {
+  const session = await getSession();
+  if (!session) {
+    return Response.json(
+      { error: "Chưa đăng nhập" },
+      { status: 401 },
+    );
+  }
+
   const parsed = transactionFilterSchema.safeParse(
     Object.fromEntries(request.nextUrl.searchParams),
   );

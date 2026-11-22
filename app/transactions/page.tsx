@@ -6,6 +6,7 @@ import { TransactionFilters } from "./transaction-filters";
 import { transactionFilterSchema } from "../../lib/validation";
 import { SignOutButton } from "./sign-out-button";
 import { requireUser } from "../../lib/dal";
+import { deleteTransaction } from "./actions";
 
 export default async function TransactionsPage({
   searchParams,
@@ -40,6 +41,12 @@ export default async function TransactionsPage({
         {rows.map((t) => (
           <li key={t.id}>
             {t.description}: {formatVND(t.amount)}
+            <form action={deleteTransaction} className="inline">
+              <input type="hidden" name="id" value={t.id} />
+              <button type="submit" className="text-sm text-red-600">
+                Xoá
+              </button>
+            </form>
           </li>
         ))}
       </ul>

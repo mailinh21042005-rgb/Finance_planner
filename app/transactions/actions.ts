@@ -30,3 +30,23 @@ export async function createTransaction(
   revalidatePath("/transactions");
   return { ok: true, message: "Đã thêm giao dịch" };
 }
+
+export async function deleteTransaction(formData: FormData) {
+  const idSchema = z.object({
+    id: z.string().trim().min(1),
+  });
+  const parsed = idSchema.safeParse({
+    id: formData.get("id"),
+  });
+  if (!parsed.success) return;
+
+  const user = await requireUser();
+  await prisma.transaction.deleteMany({
+    where: {
+      id: parsed.data.id,
+      userId: user.id,
+    },
+  });
+
+  revalidatePath("/transactions");
+}
