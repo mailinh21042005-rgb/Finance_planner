@@ -4,8 +4,12 @@ import { prisma } from "../../lib/prisma";
 import { requireUser } from "../../lib/dal";
 import { SignOutButton } from "../transactions/sign-out-button";
 
+export const metadata = {
+  title: "Dashboard",
+};
+
 // đọc CSDL mỗi lần có request, không đóng băng lúc build
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export default async function DashboardPage() {
   const user = await requireUser();
   const [thu, chi, theo] = await Promise.all([
@@ -28,14 +32,14 @@ export default async function DashboardPage() {
     (thu._sum.amount ?? 0) - (chi._sum.amount ?? 0);
   return (
     <main className="p-8">
-      <div className="flex items-center justify-between gap-2">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+      <h1 className="text-2xl font-bold">Dashboard</h1>
         <SignOutButton />
-      </div>
-      <nav className="flex gap-4 text-sm underline">
-        <Link href="/transactions">Giao dịch</Link>
-        <Link href="/wishlist">Wishlist</Link>
-      </nav>
+        <p>Xin chào {user.name} ({user.email})</p>
+        <nav className="flex gap-4 text-sm underline">
+            <Link href="/wishlist">Wishlist</Link>
+            <Link href="/transactions">Giao dịch</Link>
+        </nav>
+      <h2 className="text-xl font-bold mt-4">Tổng quan</h2>
       <p>Tổng thu: {formatVND(thu._sum.amount ?? 0)}</p>
       <p>Tổng chi: {formatVND(chi._sum.amount ?? 0)}</p>
       <p className="font-bold">

@@ -9,6 +9,10 @@ import {
 } from "./actions";
 import { SignOutButton } from "../transactions/sign-out-button";
 
+export const metadata = {
+  title: "Wishlist",
+};
+
 export default async function WishlistPage() {
   const user = await requireUser();
   const items = await prisma.wishlistItem.findMany({
@@ -22,6 +26,7 @@ export default async function WishlistPage() {
         <h1 className="text-xl font-bold">Wishlist</h1>
         <SignOutButton />
       </div>
+      <p>Xin chào {user.name} ({user.email})</p>
       <nav className="flex gap-3 text-sm underline">
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/transactions">Giao dịch</Link>
