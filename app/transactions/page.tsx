@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { prisma } from "../../lib/prisma";
 import { formatVND, getDateRange } from "../../lib/finance";
 import { TransactionForm } from "./transaction-form";
@@ -28,6 +29,10 @@ export default async function TransactionsPage({
         <p>Xin chào {user.name} ({user.email})</p>
         <SignOutButton />
       </div>
+      <nav className="flex gap-4 text-sm underline">
+        <Link href="/dashboard">Dashboard</Link>
+        <Link href="/wishlist">Wishlist</Link>
+      </nav>
       <TransactionForm />
       <TransactionFilters {...filters} />
       <p>{rows.length} giao dịch</p>
