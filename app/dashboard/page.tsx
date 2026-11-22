@@ -4,6 +4,10 @@ import { prisma } from "../../lib/prisma";
 import { requireUser } from "../../lib/dal";
 import { SignOutButton } from "../transactions/sign-out-button";
 
+export const metadata = {
+  title: "Dashboard",
+};
+
 // đọc CSDL mỗi lần có request, không đóng băng lúc build
 export const dynamic = 'force-dynamic';
 export default async function DashboardPage() {
