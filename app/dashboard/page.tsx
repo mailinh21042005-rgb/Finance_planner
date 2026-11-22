@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { formatVND } from "../../lib/finance";
 import { prisma } from "../../lib/prisma";
 import { requireUser } from "../../lib/dal";
+import { SignOutButton } from "../transactions/sign-out-button";
 
 // đọc CSDL mỗi lần có request, không đóng băng lúc build
 export const dynamic = "force-dynamic";
@@ -26,7 +28,14 @@ export default async function DashboardPage() {
     (thu._sum.amount ?? 0) - (chi._sum.amount ?? 0);
   return (
     <main className="p-8">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <div className="flex items-center justify-between gap-2">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <SignOutButton />
+      </div>
+      <nav className="flex gap-4 text-sm underline">
+        <Link href="/transactions">Giao dịch</Link>
+        <Link href="/wishlist">Wishlist</Link>
+      </nav>
       <p>Tổng thu: {formatVND(thu._sum.amount ?? 0)}</p>
       <p>Tổng chi: {formatVND(chi._sum.amount ?? 0)}</p>
       <p className="font-bold">
