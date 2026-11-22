@@ -1,7 +1,6 @@
 import type { NextRequest } from "next/server";
 import { prisma } from "../../../lib/prisma";
 import { getDateRange } from "../../../lib/finance";
-import { getSession } from "../../../lib/dal";
 import { transactionFilterSchema } from "../../../lib/validation";
 import { getSession } from "../../../lib/dal";
 

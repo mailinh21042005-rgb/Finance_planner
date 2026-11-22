@@ -18,7 +18,6 @@ export async function createTransaction(
     const flat = z.flattenError(parsed.error);
     return { errors: flat.fieldErrors, values };
   }
-  const user = await requireUser();
 
   await prisma.transaction.create({
     data: {

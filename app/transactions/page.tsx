@@ -7,7 +7,6 @@ import { deleteTransaction } from "./actions";
 import { transactionFilterSchema } from "../../lib/validation";
 import { SignOutButton } from "./sign-out-button";
 import { requireUser } from "../../lib/dal";
-import { deleteTransaction } from "./actions";
 
 export default async function TransactionsPage({
   searchParams,
