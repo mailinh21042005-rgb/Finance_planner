@@ -9,6 +9,10 @@ import {
 } from "./actions";
 import { SignOutButton } from "../transactions/sign-out-button";
 
+export const metadata = {
+  title: "Wishlist",
+};
+
 export default async function WishlistPage() {
   const user = await requireUser();
   const items = await prisma.wishlistItem.findMany({
