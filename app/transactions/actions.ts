@@ -11,6 +11,7 @@ export async function createTransaction(
   _prev: FormState,
   formData: FormData,
 ): Promise<FormState> {
+  const user = await requireUser();
   const values = readValues(formData);
   const parsed = transactionSchema.safeParse(values);
   if (!parsed.success) {
@@ -26,7 +27,6 @@ export async function createTransaction(
       userId: user.id,
     },
   });
-
   revalidatePath("/transactions");
   return { ok: true, message: "Đã thêm giao dịch" };
 }
