@@ -15,5 +15,6 @@ export const config = {
   matcher: [
     "/dashboard/:path*",
     "/transactions/:path*",
+    "/profile/:path*",
   ],
 };

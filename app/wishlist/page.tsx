@@ -30,6 +30,7 @@ export default async function WishlistPage() {
       <nav className="flex gap-3 text-sm underline">
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/transactions">Giao dịch</Link>
+        <Link href="/profile">Hồ sơ</Link>
       </nav>
 
       {/* Form thêm mới */}

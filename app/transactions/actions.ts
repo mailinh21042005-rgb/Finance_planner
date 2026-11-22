@@ -49,3 +49,31 @@ export async function deleteTransaction(formData: FormData) {
 
   revalidatePath("/transactions");
 }
+
+export async function updateTransaction(formData: FormData) {
+  const updateSchema = z.object({
+    id: z.string().trim().min(1),
+  }).extend(transactionSchema.shape);
+  const parsed = updateSchema.safeParse({
+    id: formData.get("id"),
+    ...readValues(formData),
+  });
+  if (!parsed.success) return;
+
+  const user = await requireUser();
+  await prisma.transaction.updateMany({
+    where: {
+      id: parsed.data.id,
+      userId: user.id,
+    },
+    data: {
+      type: parsed.data.type,
+      amount: parsed.data.amount,
+      description: parsed.data.description,
+      category: parsed.data.category,
+      date: new Date(parsed.data.date),
+    },
+  });
+
+  revalidatePath("/transactions");
+}

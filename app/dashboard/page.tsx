@@ -38,6 +38,7 @@ export default async function DashboardPage() {
         <nav className="flex gap-4 text-sm underline">
             <Link href="/wishlist">Wishlist</Link>
             <Link href="/transactions">Giao dịch</Link>
+            <Link href="/profile">Hồ sơ</Link>
         </nav>
       <h2 className="text-xl font-bold mt-4">Tổng quan</h2>
       <p>Tổng thu: {formatVND(thu._sum.amount ?? 0)}</p>
