@@ -3,12 +3,16 @@ import { prisma } from '../lib/prisma';
 import { ROWS, WISHLIST } from './seed-data';
 const EMAIL = 'demo@phy10615.vn';
 async function main() {
-  await prisma.user.deleteMany({
+  const demoUser = await prisma.user.upsert({
     where: { email: EMAIL },
+    update: {},
+    create: { email: EMAIL, name: 'Sinh viên demo' },
   });
-  const { id: userId } = await prisma.user.create({
-    data: { email: EMAIL, name: 'Sinh viên demo' },
-  });
+  const userId = demoUser.id;
+
+  await prisma.transaction.deleteMany({ where: { userId } });
+  await prisma.wishlistItem.deleteMany({ where: { userId } });
+
   await prisma.transaction.createMany({
     data: ROWS.map((r) => ({ ...r, userId })),
   });
