@@ -42,6 +42,13 @@ export default function LoginPage() {
         onClick={() => setIsSignUp(!isSignUp)}>
         {isSignUp ? "Đã có tài khoản" : "Tạo tài khoản"}
       </button>
+      <button type="button" onClick={() =>
+        authClient.signIn.social({
+          provider: "github",
+          callbackURL: "/transactions",
+        })}>
+        Đăng nhập với GitHub
+      </button>
     </form>
   );
 }

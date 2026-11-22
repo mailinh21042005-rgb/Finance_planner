@@ -32,6 +32,7 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <SignOutButton />
       </div>
+      <p>Xin chào {user.name} ({user.email})</p>
       <nav className="flex gap-4 text-sm underline">
         <Link href="/transactions">Giao dịch</Link>
         <Link href="/wishlist">Wishlist</Link>

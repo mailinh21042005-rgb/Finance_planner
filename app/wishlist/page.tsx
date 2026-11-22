@@ -22,6 +22,7 @@ export default async function WishlistPage() {
         <h1 className="text-xl font-bold">Wishlist</h1>
         <SignOutButton />
       </div>
+      <p>Xin chào {user.name} ({user.email})</p>
       <nav className="flex gap-3 text-sm underline">
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/transactions">Giao dịch</Link>
