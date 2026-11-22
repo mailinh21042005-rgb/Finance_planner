@@ -7,7 +7,8 @@ import { deleteTransaction } from "./actions";
 import { transactionFilterSchema } from "../../lib/validation";
 import { SignOutButton } from "./sign-out-button";
 import { requireUser } from "../../lib/dal";
-  
+import { deleteTransaction } from "./actions";
+
 export default async function TransactionsPage({
   searchParams,
 }: PageProps<"/transactions">) {
@@ -29,6 +30,7 @@ export default async function TransactionsPage({
         <p>Xin chào {user.name} ({user.email})</p>
         <SignOutButton />
       </div>
+      <p>Xin chào {user.name} ({user.email})</p>
       <nav className="flex gap-4 text-sm underline">
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/wishlist">Wishlist</Link>
@@ -40,10 +42,11 @@ export default async function TransactionsPage({
         {rows.map((t) => (
           <li key={t.id} className="flex gap-2">
             {t.description}: {formatVND(t.amount)}
-            <form action={deleteTransaction}>
-              <input type="hidden" name="id"
-                value={t.id} />
-              <button>Xoá</button>
+            <form action={deleteTransaction} className="inline">
+              <input type="hidden" name="id" value={t.id} />
+              <button type="submit" className="text-sm text-red-600">
+                Xoá
+              </button>
             </form>
           </li>
         ))}
