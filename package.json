@@ -115,8 +115,14 @@
     "zod": "^4.6.7"
   },
   "scripts": {
-    "test": "vitest run"
-  },
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "eslint",
+  "typecheck": "tsc --noEmit",
+  "test": "vitest run"
+},
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mailinh21042005-rgb/Finance_planner.git"
