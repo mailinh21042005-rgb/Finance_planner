@@ -1,12 +1,15 @@
 "use client";
-import { useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState, type FormEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "../../lib/auth-client";
 import { LoadingButton } from "../../components/loading-button";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
-  const [isSignUp, setIsSignUp] = useState(false);
+  const searchParams = useSearchParams();
+  const [isSignUp, setIsSignUp] = useState(
+    searchParams.get("mode") === "signup",
+  );
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSocialLoading, setIsSocialLoading] = useState(false);
@@ -35,7 +38,7 @@ export default function LoginPage() {
         setError(authError.message ?? `${label} thất bại`);
         return;
       }
-      router.push("/transactions");
+      router.push("/dashboard");
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : `${label} thất bại`);
     } finally {
@@ -51,7 +54,7 @@ export default function LoginPage() {
     try {
       const { error: authError } = await authClient.signIn.social({
         provider: "github",
-        callbackURL: "/transactions",
+        callbackURL: "/dashboard",
       });
       if (authError) {
         setError(authError.message ?? "Đăng nhập với GitHub thất bại");
@@ -101,5 +104,13 @@ export default function LoginPage() {
         Đăng nhập với GitHub
       </LoadingButton>
     </form>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-sm">Đang tải...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

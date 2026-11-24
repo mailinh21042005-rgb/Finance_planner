@@ -211,10 +211,14 @@ export function WishlistClient({
 function WishlistRow({ item, balance }: { item: WishlistItemDTO; balance: number }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, startDelete] = useTransition();
-  const [editState, editAction, isUpdating] = useActionState<WishlistFormState, FormData>(
-    updateWishlistItem,
-    {},
-  );
+  const [editState, editAction, isUpdating] = useActionState<
+    WishlistFormState,
+    FormData
+  >(async (prevState, formData) => {
+    const result = await updateWishlistItem(prevState, formData);
+    if (result.ok) setIsEditing(false);
+    return result;
+  }, {});
 
   const percent = wishlistProgress(balance, item.cost);
   const priorityInfo = PRIORITY_LABEL[item.priority];
@@ -223,7 +227,6 @@ function WishlistRow({ item, balance }: { item: WishlistItemDTO; balance: number
     if (!editState.message) return;
     if (editState.ok) {
       toast.success(editState.message);
-      setIsEditing(false);
     } else {
       toast.error(editState.message);
     }

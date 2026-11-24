@@ -57,7 +57,7 @@ export default async function HomePage() {
 
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           <Link
-            href="/register"
+            href="/login?mode=signup"
             className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
             Bắt đầu ngay
@@ -72,7 +72,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3 tính năng chính */}
       <section
         aria-label="Tính năng nổi bật"
         className="grid gap-4 sm:grid-cols-3"
