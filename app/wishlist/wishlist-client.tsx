@@ -7,6 +7,7 @@ import {
   formatVND,
   wishlistProgress,
 } from "../../lib/finance";
+import { LoadingButton } from "../../components/loading-button";
 import {
   createWishlistItem,
   deleteWishlistItem,
@@ -181,13 +182,14 @@ export function WishlistClient({
           </div>
         </div>
 
-        <button
+        <LoadingButton
           type="submit"
-          disabled={isCreating}
+          loading={isCreating}
+          loadingText="Đang thêm..."
           className="rounded-md bg-primary py-2 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
         >
-          {isCreating ? "Đang thêm..." : "Thêm vào Wishlist"}
-        </button>
+          Thêm vào Wishlist
+        </LoadingButton>
       </form>
 
       {/* Danh sách Wishlist */}
@@ -280,14 +282,15 @@ function WishlistRow({ item, balance }: { item: WishlistItemDTO; balance: number
             >
               Sửa
             </button>
-            <button
+            <LoadingButton
               type="button"
-              disabled={isDeleting}
+              loading={isDeleting}
+              loadingText="Đang xoá..."
               onClick={handleDelete}
               className="rounded-md border border-red-200 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-50 disabled:opacity-50 dark:border-red-900 dark:hover:bg-red-950"
             >
-              {isDeleting ? "Đang xoá..." : "Xoá"}
-            </button>
+              Xoá
+            </LoadingButton>
           </div>
         </div>
       ) : (
@@ -347,13 +350,14 @@ function WishlistRow({ item, balance }: { item: WishlistItemDTO; balance: number
             >
               Huỷ
             </button>
-            <button
+            <LoadingButton
               type="submit"
-              disabled={isUpdating}
+              loading={isUpdating}
+              loadingText="Đang lưu..."
               className="rounded-md bg-primary px-3 py-1 text-xs font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
             >
-              {isUpdating ? "Đang lưu..." : "Lưu thay đổi"}
-            </button>
+              Lưu thay đổi
+            </LoadingButton>
           </div>
         </form>
       )}

@@ -1,6 +1,7 @@
 "use client";
 import { useActionState } from "react";
 import { Category } from "../../generated/prisma/enums";
+import { LoadingButton } from "../../components/loading-button";
 import { createTransaction } from "./actions";
 
 export function TransactionForm() {
@@ -29,7 +30,13 @@ export function TransactionForm() {
       <input name="date" type="date" aria-label="Ngày"
         defaultValue={v.date} />
       <Err msg={err.date} />
-      <button disabled={pending}>Thêm</button>
+      <LoadingButton
+        type="submit"
+        loading={pending}
+        loadingText="Đang thêm..."
+      >
+        Thêm
+      </LoadingButton>
       {state.ok && <output>{state.message}</output>}
     </form>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Category, TransactionType } from "../../generated/prisma/enums";
 import { formatVND } from "../../lib/finance";
+import { LoadingButton } from "../../components/loading-button";
 import { deleteTransaction, updateTransaction } from "./actions";
 
 type TransactionRowProps = {
@@ -39,9 +40,13 @@ export function TransactionRow({ transaction: t }: TransactionRowProps) {
         </button>
         <form action={deleteTransaction} className="inline">
           <input type="hidden" name="id" value={t.id} />
-          <button type="submit" className="text-sm text-red-600">
+          <LoadingButton
+            type="submit"
+            loadingText="Đang xoá..."
+            className="text-sm text-red-600"
+          >
             Xoá
-          </button>
+          </LoadingButton>
         </form>
       </li>
     );
@@ -69,7 +74,9 @@ export function TransactionRow({ transaction: t }: TransactionRowProps) {
           defaultValue={t.date.toISOString().slice(0, 10)}
           aria-label="Ngày"
         />
-        <button type="submit" className="text-sm">Lưu</button>
+        <LoadingButton type="submit" loadingText="Đang lưu..." className="text-sm">
+          Lưu
+        </LoadingButton>
         <button type="button" className="text-sm" onClick={() => setEditing(false)}>
           Huỷ
         </button>
