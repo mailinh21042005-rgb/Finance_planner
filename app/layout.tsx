@@ -1,3 +1,7 @@
+import { Toaster } from "sonner";
+import "./globals.css";
+import { ThemeProvider } from "../components/theme-provider";
+
 export const metadata = {
   title: 'Finance Planner',
   description: 'Quản lý tài chính cá nhân',
@@ -10,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster richColors position="top-right" />
+      </body>
     </html>
   );
 }
