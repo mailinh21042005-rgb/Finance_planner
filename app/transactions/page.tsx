@@ -1,10 +1,8 @@
-import Link from "next/link";
 import { prisma } from "../../lib/prisma";
 import { getDateRange } from "../../lib/finance";
 import { TransactionForm } from "./transaction-form";
 import { TransactionFilters } from "./transaction-filters";
 import { transactionFilterSchema } from "../../lib/validation";
-import { SignOutButton } from "./sign-out-button";
 import { requireUser } from "../../lib/dal";
 import { TransactionRow } from "./transaction-row";
 
@@ -30,15 +28,7 @@ export default async function TransactionsPage({
   return (
     <main className="grid max-w-md gap-4 p-8">
       <h1 className="text-2xl font-bold">Giao dịch</h1>
-      <div className="flex items-center justify-between gap-2">
-        <SignOutButton />
-        <p>Xin chào {user.name} ({user.email})</p>
-      </div>
-      <nav className="flex gap-4 text-sm underline">
-        <Link href="/dashboard">Dashboard</Link>
-        <Link href="/wishlist">Wishlist</Link>
-        <Link href="/profile">Hồ sơ</Link>
-      </nav>
+      <p>Xin chào {user.name} ({user.email})</p>
       <TransactionForm />
       <TransactionFilters {...filters} />
       <p>{rows.length} giao dịch</p>

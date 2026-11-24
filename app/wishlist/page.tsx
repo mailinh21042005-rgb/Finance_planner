@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { prisma } from "../../lib/prisma";
 import { requireUser } from "../../lib/dal";
 import { calculateBalance } from "../../lib/finance";
-import { SignOutButton } from "../transactions/sign-out-button";
 import { WishlistClient, type WishlistItemDTO } from "./wishlist-client";
 
 export const metadata = {
@@ -35,18 +33,9 @@ export default async function WishlistPage() {
 
   return (
     <main className="grid max-w-2xl gap-6 p-8">
-      <div className="flex items-center justify-between gap-2">
-        <h1 className="text-2xl font-bold">Wishlist</h1>
-        <SignOutButton />
-      </div>
+      <h1 className="text-2xl font-bold">Wishlist</h1>
 
       <p>Xin chào {user.name} ({user.email})</p>
-
-      <nav className="flex gap-4 text-sm underline">
-        <Link href="/dashboard">Dashboard</Link>
-        <Link href="/transactions">Giao dịch</Link>
-        <Link href="/profile">Hồ sơ</Link>
-      </nav>
 
       <WishlistClient
         userId={user.id}
