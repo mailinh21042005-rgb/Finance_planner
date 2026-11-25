@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Barlow_Condensed, Geist, Playfair_Display } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
@@ -8,7 +8,19 @@ import { Navbar } from "@/components/navbar";
 import { PwaRegister } from "@/components/pwa-register";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const geist = Geist({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-geist-sans",
+});
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-barlow-condensed",
+  weight: ["500", "600", "700"],
+});
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-playfair",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -44,8 +56,13 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={cn("font-sans", geist.variable)}
       suppressHydrationWarning
+      className={cn(
+        "font-sans",
+        geist.variable,
+        barlowCondensed.variable,
+        playfairDisplay.variable,
+      )}
     >
       <body className="min-h-screen overflow-x-hidden bg-background text-foreground antialiased">
         <ThemeProvider

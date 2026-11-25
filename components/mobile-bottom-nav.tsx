@@ -6,7 +6,7 @@ import { LayoutDashboard, ArrowLeftRight, Heart, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { href: "/dashboard", label: "Tổng quan", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/transactions", label: "Giao dịch", icon: ArrowLeftRight },
   { href: "/wishlist", label: "Wishlist", icon: Heart },
   { href: "/profile", label: "Hồ sơ", icon: User },
@@ -16,7 +16,7 @@ export function MobileBottomNav() {
   const pathname = usePathname();
 
   // Ẩn trên trang giới thiệu và trang đăng nhập
-  if (pathname === "/" || pathname.startsWith("/login")) {
+  if (pathname === "/" || pathname.startsWith("/login") || pathname.startsWith("/register")) {
     return null;
   }
 

@@ -93,7 +93,6 @@ export function buildMonthlyReport(
 ): MonthlySummary[] {
   const buckets = new Map<string, MonthlySummary>();
 
-  // Tạo sẵn khung N tháng liên tiếp để biểu đồ không bị khuyết tháng không có giao dịch
   for (let i = months - 1; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     const y = d.getFullYear();

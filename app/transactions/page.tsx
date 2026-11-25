@@ -28,9 +28,6 @@ export default async function TransactionsPage({
   return (
     <main className="mx-auto grid w-full max-w-2xl gap-4 p-4 sm:p-8">
       <h1 className="text-2xl font-bold">Giao dịch</h1>
-      <p className="text-sm text-muted-foreground">
-        Xin chào {user.name} ({user.email})
-      </p>
       <TransactionForm />
       <TransactionFilters {...filters} />
       <p className="text-sm font-medium">{rows.length} giao dịch</p>

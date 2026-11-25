@@ -32,10 +32,8 @@ export default async function WishlistPage() {
   }));
 
   return (
-    <main className="grid max-w-2xl gap-6 p-8">
+    <main className="mx-auto grid w-full max-w-2xl gap-6 p-4 sm:p-8">
       <h1 className="text-2xl font-bold">Wishlist</h1>
-
-      <p>Xin chào {user.name} ({user.email})</p>
 
       <WishlistClient
         userId={user.id}

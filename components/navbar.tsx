@@ -24,6 +24,7 @@ export function Navbar() {
       <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-4 px-4 md:px-8">
         {/* Logo */}
         <Link
+          id="navbar-logo"
           href={isPublicPage ? "/" : "/dashboard"}
           className="flex items-center gap-2 font-bold tracking-tight"
         >
@@ -64,33 +65,6 @@ export function Navbar() {
           {!isPublicPage && <SignOutButton />}
         </div>
       </div>
-
-      {/* Menu mobile */}
-      {!isPublicPage && (
-        <nav
-          aria-label="Điều hướng di động"
-          className="flex items-center justify-around border-t px-2 py-1.5 md:hidden"
-        >
-          {NAV_ITEMS.map((item) => {
-            const isActive =
-              pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isActive ? "page" : undefined}
-                className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
-                  isActive
-                    ? "bg-secondary text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-      )}
     </header>
   );
 }
