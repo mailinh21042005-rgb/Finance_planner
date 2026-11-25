@@ -26,13 +26,15 @@ export default async function TransactionsPage({
     orderBy: { date: "desc" },
   });
   return (
-    <main className="grid max-w-md gap-4 p-8">
+    <main className="mx-auto grid w-full max-w-2xl gap-4 p-4 sm:p-8">
       <h1 className="text-2xl font-bold">Giao dịch</h1>
-      <p>Xin chào {user.name} ({user.email})</p>
+      <p className="text-sm text-muted-foreground">
+        Xin chào {user.name} ({user.email})
+      </p>
       <TransactionForm />
       <TransactionFilters {...filters} />
-      <p>{rows.length} giao dịch</p>
-      <ul>
+      <p className="text-sm font-medium">{rows.length} giao dịch</p>
+      <ul className="space-y-3">
         {rows.map((t) => (
           <TransactionRow key={t.id} transaction={t} />
         ))}

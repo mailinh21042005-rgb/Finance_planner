@@ -152,6 +152,7 @@ export function WishlistClient({
               id="wish-cost"
               name="cost"
               type="number"
+              inputMode="numeric"
               min={1}
               step={1}
               placeholder="15000000"
@@ -320,6 +321,7 @@ function WishlistRow({ item, balance }: { item: WishlistItemDTO; balance: number
               <input
                 name="cost"
                 type="number"
+                inputMode="numeric"
                 min={1}
                 step={1}
                 required

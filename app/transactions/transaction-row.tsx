@@ -17,6 +17,9 @@ type TransactionRowProps = {
   };
 };
 
+const fieldClass =
+  "min-h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-base sm:w-auto md:min-h-9 md:text-sm";
+
 export function TransactionRow({ transaction: t }: TransactionRowProps) {
   const [editing, setEditing] = useState(false);
 
@@ -27,43 +30,57 @@ export function TransactionRow({ transaction: t }: TransactionRowProps) {
 
   if (!editing) {
     return (
-      <li className="flex items-center gap-2 border p-2">
-        <span className="flex-1">
+      <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3">
+        <span className="min-w-0 flex-1 break-words">
           {t.description}: {formatVND(t.amount)}
         </span>
-        <button
-          type="button"
-          className="text-sm"
-          onClick={() => setEditing(true)}
-        >
-          Sửa
-        </button>
-        <form action={deleteTransaction} className="inline">
-          <input type="hidden" name="id" value={t.id} />
-          <LoadingButton
-            type="submit"
-            loadingText="Đang xoá..."
-            className="text-sm text-red-600"
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            className="inline-flex min-h-11 items-center justify-center rounded-md border px-3 text-sm md:min-h-8"
+            onClick={() => setEditing(true)}
           >
-            Xoá
-          </LoadingButton>
-        </form>
+            Sửa
+          </button>
+          <form action={deleteTransaction} className="inline">
+            <input type="hidden" name="id" value={t.id} />
+            <LoadingButton
+              type="submit"
+              loadingText="Đang xoá..."
+              className="min-h-11 px-3 text-sm text-red-600 md:min-h-8"
+            >
+              Xoá
+            </LoadingButton>
+          </form>
+        </div>
       </li>
     );
   }
 
   return (
-    <li className="grid gap-2 border p-2">
-      <form action={save} className="flex flex-wrap gap-2">
+    <li className="grid gap-2 rounded-lg border p-3">
+      <form action={save} className="grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
         <input type="hidden" name="id" value={t.id} />
-        <select name="type" defaultValue={t.type} aria-label="Loại">
+        <select name="type" defaultValue={t.type} aria-label="Loại" className={fieldClass}>
           {Object.values(TransactionType).map((type) => (
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
-        <input name="amount" type="number" defaultValue={t.amount} aria-label="Số tiền" />
-        <input name="description" defaultValue={t.description} aria-label="Mô tả" />
-        <select name="category" defaultValue={t.category} aria-label="Danh mục">
+        <input
+          name="amount"
+          type="number"
+          inputMode="numeric"
+          defaultValue={t.amount}
+          aria-label="Số tiền"
+          className={fieldClass}
+        />
+        <input
+          name="description"
+          defaultValue={t.description}
+          aria-label="Mô tả"
+          className={fieldClass}
+        />
+        <select name="category" defaultValue={t.category} aria-label="Danh mục" className={fieldClass}>
           {Object.values(Category).map((category) => (
             <option key={category} value={category}>{category}</option>
           ))}
@@ -73,13 +90,20 @@ export function TransactionRow({ transaction: t }: TransactionRowProps) {
           type="date"
           defaultValue={t.date.toISOString().slice(0, 10)}
           aria-label="Ngày"
+          className={fieldClass}
         />
-        <LoadingButton type="submit" loadingText="Đang lưu..." className="text-sm">
-          Lưu
-        </LoadingButton>
-        <button type="button" className="text-sm" onClick={() => setEditing(false)}>
-          Huỷ
-        </button>
+        <div className="flex items-center gap-2">
+          <LoadingButton type="submit" loadingText="Đang lưu..." className="min-h-11 px-3 text-sm md:min-h-8">
+            Lưu
+          </LoadingButton>
+          <button
+            type="button"
+            className="inline-flex min-h-11 items-center justify-center rounded-md border px-3 text-sm md:min-h-8"
+            onClick={() => setEditing(false)}
+          >
+            Huỷ
+          </button>
+        </div>
       </form>
     </li>
   );
