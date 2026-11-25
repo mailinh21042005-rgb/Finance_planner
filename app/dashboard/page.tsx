@@ -1,7 +1,10 @@
 import Link from "next/link";
 import {
+  analyzeSpendingTrend,
+  buildMonthlyReport,
   formatVND,
   getDateRange,
+  getLastNMonthsStart,
   wishlistProgress,
 } from "../../lib/finance";
 import { prisma } from "../../lib/prisma";
@@ -10,6 +13,7 @@ import {
   ExpensePieChart,
   type CategoryExpenseItem,
 } from "./expense-pie-chart";
+import { MonthlyReport } from "../../components/monthly-report";
 
 export const metadata = {
   title: "Dashboard",
@@ -33,36 +37,49 @@ export default async function DashboardPage() {
   const user = await requireUser();
   const thisMonthRange = getDateRange("this-month");
 
-  const [thu, chi, theoThangNay, wishlistItems] = await Promise.all([
-    prisma.transaction.aggregate({
-      _sum: { amount: true },
-      where: { type: "INCOME", userId: user.id },
-    }),
-    prisma.transaction.aggregate({
-      _sum: { amount: true },
-      where: { type: "EXPENSE", userId: user.id },
-    }),
-    prisma.transaction.groupBy({
-      by: ["category"],
-      _sum: { amount: true },
-      where: {
-        type: "EXPENSE",
-        userId: user.id,
-        date: thisMonthRange,
-      },
-      orderBy: { _sum: { amount: "desc" } },
-    }),
-    prisma.wishlistItem.findMany({
-      where: { userId: user.id },
-      orderBy: { cost: "asc" },
-      select: {
-        id: true,
-        name: true,
-        cost: true,
-        priority: true,
-      },
-    }),
-  ]);
+  const [thu, chi, theoThangNay, wishlistItems, recentTransactions] =
+    await Promise.all([
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { type: "INCOME", userId: user.id },
+      }),
+      prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: { type: "EXPENSE", userId: user.id },
+      }),
+      prisma.transaction.groupBy({
+        by: ["category"],
+        _sum: { amount: true },
+        where: {
+          type: "EXPENSE",
+          userId: user.id,
+          date: thisMonthRange,
+        },
+        orderBy: { _sum: { amount: "desc" } },
+      }),
+      prisma.wishlistItem.findMany({
+        where: { userId: user.id },
+        orderBy: { cost: "asc" },
+        select: {
+          id: true,
+          name: true,
+          cost: true,
+          priority: true,
+        },
+      }),
+      prisma.transaction.findMany({
+        where: {
+          userId: user.id,
+          date: { gte: getLastNMonthsStart(6) },
+        },
+        select: {
+          type: true,
+          amount: true,
+          date: true,
+        },
+        orderBy: { date: "asc" },
+      }),
+    ]);
 
   const tongThu = thu._sum.amount ?? 0;
   const tongChi = chi._sum.amount ?? 0;
@@ -90,8 +107,11 @@ export default async function DashboardPage() {
     })
     .filter((d) => d.amount > 0);
 
+  const monthlyData = buildMonthlyReport(recentTransactions, 6);
+  const spendingTrend = analyzeSpendingTrend(monthlyData);
+
   return (
-    <main className="mx-auto grid max-w-4xl gap-8 p-6 md:p-8">
+    <main className="mx-auto grid w-full max-w-4xl gap-8 p-4 sm:p-6 md:p-8">
       {/* Header */}
       <div>
         <div>
@@ -127,7 +147,7 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      <section aria-labelledby="chart-heading" className="grid gap-3">
+      <section aria-labelledby="chart-heading" className="grid min-w-0 gap-3">
         <div className="flex items-baseline justify-between gap-2">
           <h2 id="chart-heading" className="text-lg font-semibold">
             Chi tiêu tháng này theo danh mục
@@ -138,6 +158,10 @@ export default async function DashboardPage() {
         </div>
         <ExpensePieChart data={chartData} />
       </section>
+
+      <div className="min-w-0">
+        <MonthlyReport data={monthlyData} trend={spendingTrend} />
+      </div>
 
       <section aria-labelledby="wishlist-heading" className="grid gap-3">
         <div className="flex items-center justify-between">

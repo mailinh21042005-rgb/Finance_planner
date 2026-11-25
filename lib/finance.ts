@@ -51,3 +51,108 @@ export function calculateBalance(
     return t.type === "INCOME" ? acc + t.amount : acc - t.amount;
   }, 0);
 }
+
+export type MonthlySummary = {
+  monthKey: string; 
+  label: string;    
+  income: number;
+  expense: number;
+  net: number;
+};
+
+export type SpendingTrend = {
+  currentExpense: number;
+  previousExpense: number;
+  diff: number;
+  percentChange: number | null; 
+  direction: "up" | "down" | "flat";
+  averageExpense: number;
+  peakMonth: MonthlySummary | null;
+};
+
+export function getLastNMonthsStart(months = 6, now: Date = new Date()): Date {
+  return new Date(now.getFullYear(), now.getMonth() - (months - 1), 1, 0, 0, 0, 0);
+}
+
+export function formatCompactVND(amount: number): string {
+  const abs = Math.abs(amount);
+  const sign = amount < 0 ? "-" : "";
+  if (abs >= 1_000_000) {
+    return `${sign}${(abs / 1_000_000).toFixed(1).replace(/\.0$/, "")}tr`;
+  }
+  if (abs >= 1_000) {
+    return `${sign}${Math.round(abs / 1_000)}k`;
+  }
+  return `${sign}${abs}`;
+}
+
+export function buildMonthlyReport(
+  transactions: Array<{ type: string; amount: number; date: Date }>,
+  months = 6,
+  now: Date = new Date(),
+): MonthlySummary[] {
+  const buckets = new Map<string, MonthlySummary>();
+
+  // Tạo sẵn khung N tháng liên tiếp để biểu đồ không bị khuyết tháng không có giao dịch
+  for (let i = months - 1; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const y = d.getFullYear();
+    const m = d.getMonth() + 1;
+    const monthKey = `${y}-${String(m).padStart(2, "0")}`;
+    const label = `${String(m).padStart(2, "0")}/${String(y).slice(-2)}`;
+    buckets.set(monthKey, { monthKey, label, income: 0, expense: 0, net: 0 });
+  }
+
+  for (const tx of transactions) {
+    const d = new Date(tx.date);
+    const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const bucket = buckets.get(monthKey);
+    if (!bucket) continue;
+
+    if (tx.type === "INCOME") {
+      bucket.income += tx.amount;
+    } else if (tx.type === "EXPENSE") {
+      bucket.expense += tx.amount;
+    }
+    bucket.net = bucket.income - bucket.expense;
+  }
+
+  return Array.from(buckets.values());
+}
+
+export function analyzeSpendingTrend(monthly: MonthlySummary[]): SpendingTrend {
+  const currentExpense = monthly.at(-1)?.expense ?? 0;
+  const previousExpense = monthly.at(-2)?.expense ?? 0;
+  const diff = currentExpense - previousExpense;
+
+  let percentChange: number | null = 0;
+  if (previousExpense === 0) {
+    percentChange = currentExpense > 0 ? null : 0;
+  } else {
+    percentChange = Math.round((diff / previousExpense) * 100);
+  }
+
+  const direction: SpendingTrend["direction"] =
+    diff > 0 ? "up" : diff < 0 ? "down" : "flat";
+
+  const totalExpense = monthly.reduce((sum, item) => sum + item.expense, 0);
+  const averageExpense =
+    monthly.length > 0 ? Math.round(totalExpense / monthly.length) : 0;
+
+  let peakMonth: MonthlySummary | null = null;
+  for (const item of monthly) {
+    if (item.expense > 0 && (!peakMonth || item.expense > peakMonth.expense)) {
+      peakMonth = item;
+    }
+  }
+
+  return {
+    currentExpense,
+    previousExpense,
+    diff,
+    percentChange,
+    direction,
+    averageExpense,
+    peakMonth,
+  };
+}
