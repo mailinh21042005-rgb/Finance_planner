@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow_Condensed, Geist, Playfair_Display } from "next/font/google";
+import { Geist, Great_Vibes, Oswald, Playfair_Display } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
@@ -7,19 +7,26 @@ import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/navbar";
 import { PwaRegister } from "@/components/pwa-register";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
+import { NeonBackground } from "@/components/neon-background";
+import { LightFireworksBackground } from "@/components/light-fireworks-background";
 
 const geist = Geist({
   subsets: ["latin", "vietnamese"],
   variable: "--font-geist-sans",
 });
-const barlowCondensed = Barlow_Condensed({
+const oswald = Oswald({
   subsets: ["latin", "vietnamese"],
-  variable: "--font-barlow-condensed",
-  weight: ["500", "600", "700"],
+  variable: "--font-oswald",
+  weight: ["400", "500", "600", "700"],
 });
 const playfairDisplay = Playfair_Display({
   subsets: ["latin", "vietnamese"],
   variable: "--font-playfair",
+});
+const greatVibes = Great_Vibes({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-great-vibes",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -60,8 +67,9 @@ export default function RootLayout({
       className={cn(
         "font-sans",
         geist.variable,
-        barlowCondensed.variable,
+        oswald.variable,
         playfairDisplay.variable,
+        greatVibes.variable,
       )}
     >
       <body className="min-h-screen overflow-x-hidden bg-background text-foreground antialiased">
@@ -71,9 +79,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <div className="pb-20 md:pb-0">{children}</div>
-          <MobileBottomNav />
+          <div className="relative isolate min-h-screen">
+            <NeonBackground />
+            <LightFireworksBackground />
+            <Navbar />
+            <div className="pb-20 md:pb-0">{children}</div>
+            <MobileBottomNav />
+          </div>
           <Toaster richColors position="top-right" />
         </ThemeProvider>
         <PwaRegister />

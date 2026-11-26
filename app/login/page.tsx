@@ -3,6 +3,7 @@ import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "../../lib/auth-client";
 import { LoadingButton } from "../../components/loading-button";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 function LoginForm() {
   const router = useRouter();
@@ -110,7 +111,9 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <Suspense fallback={<div className="p-8 text-sm">Đang tải...</div>}>
-      <LoginForm />
+      <ScrollReveal>
+        <LoginForm />
+      </ScrollReveal>
     </Suspense>
   );
 }

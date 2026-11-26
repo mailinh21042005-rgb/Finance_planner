@@ -3,6 +3,7 @@ import { useActionState } from "react";
 import { Category } from "../../generated/prisma/enums";
 import { LoadingButton } from "../../components/loading-button";
 import { createTransaction } from "./actions";
+import { CurrencyInput } from "@/components/currency-input";
 
 const fieldClass =
   "min-h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-base md:min-h-9 md:text-sm";
@@ -22,10 +23,10 @@ export function TransactionForm() {
         <option value="EXPENSE">Chi</option>
         <option value="INCOME">Thu</option>
       </select>
-      <input
+      <CurrencyInput
         name="amount"
-        inputMode="numeric"
-        placeholder="Số tiền (VND)"
+        placeholder="Số tiền (VD: 1.000.000)"
+        required
         defaultValue={v.amount}
         className={fieldClass}
       />

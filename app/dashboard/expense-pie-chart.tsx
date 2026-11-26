@@ -17,14 +17,14 @@ export type CategoryExpenseItem = {
 };
 
 const CHART_COLORS = [
-  "var(--chart-1)",
-  "var(--chart-2)",
-  "var(--chart-3)",
-  "var(--chart-4)",
-  "var(--chart-5)",
-  "#0ea5e9",
-  "#10b981",
-  "#64748b",
+  "#38bdf8", 
+  "#a78bfa", 
+  "#f472b6", 
+  "#34d399",
+  "#fbbf24", 
+  "#818cf8", 
+  "#fb7185", 
+  "#94a3b8", 
 ];
 
 export function ExpensePieChart({ data }: { data: CategoryExpenseItem[] }) {
@@ -47,7 +47,6 @@ export function ExpensePieChart({ data }: { data: CategoryExpenseItem[] }) {
 
   return (
     <figure className="grid gap-6 rounded-xl border p-4 shadow-sm md:grid-cols-2 md:items-center">
-      {/* Biểu đồ tròn shadcn Chart (ẩn khỏi trình đọc màn hình vì đã có bảng bên cạnh) */}
       <div aria-hidden="true" className="w-full">
         <ChartContainer
           config={chartConfig}

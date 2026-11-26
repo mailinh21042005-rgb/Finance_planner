@@ -112,12 +112,12 @@ export function MonthlyReport({ data, trend }: MonthlyReportProps) {
       ) : (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {/* Biểu đồ cột so sánh Thu - Chi */}
-          <div className="rounded-xl border bg-card p-4">
+          <div className="min-w-0 rounded-xl border bg-card p-4">
             <h3 className="mb-3 text-sm font-semibold">
               So sánh Thu – Chi theo tháng
             </h3>
-            <div className="h-[260px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[260px] w-full min-w-0">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                   <XAxis dataKey="label" tick={{ fontSize: 12 }} />
@@ -156,10 +156,10 @@ export function MonthlyReport({ data, trend }: MonthlyReportProps) {
           </div>
 
           {/* Biểu đồ đường xu hướng chi tiêu */}
-          <div className="rounded-xl border bg-card p-4">
+          <div className="min-w-0 rounded-xl border bg-card p-4">
             <h3 className="mb-3 text-sm font-semibold">Xu hướng chi tiêu</h3>
-            <div className="h-[260px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[260px] w-full min-w-0">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <LineChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                   <XAxis dataKey="label" tick={{ fontSize: 12 }} />

@@ -8,6 +8,7 @@ import {
   wishlistProgress,
 } from "../../lib/finance";
 import { LoadingButton } from "../../components/loading-button";
+import { CurrencyInput } from "@/components/currency-input";
 import {
   createWishlistItem,
   deleteWishlistItem,
@@ -48,7 +49,6 @@ export function WishlistClient({
     {},
   );
 
-  // Phản hồi toast khi thêm mới
   useEffect(() => {
     if (!createState.message) return;
     if (createState.ok) {
@@ -59,7 +59,6 @@ export function WishlistClient({
     }
   }, [createState]);
 
-  // Kiểm tra mốc tiết kiệm 50%, 75%, 100% (không lặp lại)
   useEffect(() => {
     const storageKey = `fp_wishlist_milestones_${userId}`;
     let store: SavedProgressStore = { lastPercent: {}, notified: {} };
@@ -68,7 +67,6 @@ export function WishlistClient({
       const raw = localStorage.getItem(storageKey);
       if (raw) store = JSON.parse(raw);
     } catch {
-      // Bỏ qua nếu localStorage bị chặn
     }
 
     let changed = false;
@@ -148,14 +146,11 @@ export function WishlistClient({
             <label htmlFor="wish-cost" className="mb-1 block text-sm font-medium">
               Giá mục tiêu (VND)
             </label>
-            <input
+            <CurrencyInput
               id="wish-cost"
               name="cost"
-              type="number"
-              inputMode="numeric"
-              min={1}
-              step={1}
-              placeholder="15000000"
+              placeholder="Giá tiền (VD: 5.000.000)"
+              required
               className="w-full rounded-md border bg-background px-3 py-2 text-sm"
             />
             {createState.errors?.cost && (
@@ -318,14 +313,11 @@ function WishlistRow({ item, balance }: { item: WishlistItemDTO; balance: number
           <div className="grid grid-cols-2 gap-2">
             <div>
               <label className="mb-1 block text-xs font-medium">Giá (VND)</label>
-              <input
+              <CurrencyInput
                 name="cost"
-                type="number"
-                inputMode="numeric"
-                min={1}
-                step={1}
                 required
                 defaultValue={item.cost}
+                placeholder="Giá tiền (VD: 5.000.000)"
                 className="w-full rounded-md border bg-background px-2.5 py-1.5 text-sm"
               />
               {editState.errors?.cost && (

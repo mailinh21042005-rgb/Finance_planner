@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Category, TransactionType } from "../../generated/prisma/enums";
 import { formatVND } from "../../lib/finance";
 import { LoadingButton } from "../../components/loading-button";
+import { CurrencyInput } from "@/components/currency-input";
 import { deleteTransaction, updateTransaction } from "./actions";
 
 type TransactionRowProps = {
@@ -66,11 +67,10 @@ export function TransactionRow({ transaction: t }: TransactionRowProps) {
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
-        <input
+        <CurrencyInput
           name="amount"
-          type="number"
-          inputMode="numeric"
           defaultValue={t.amount}
+          required
           aria-label="Số tiền"
           className={fieldClass}
         />

@@ -85,9 +85,10 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
-  --font-display: var(--font-barlow-condensed), sans-serif;
-  --font-heading: var(--font-barlow-condensed), sans-serif;
+  --font-display: var(--font-oswald), sans-serif;
+  --font-heading: var(--font-oswald), sans-serif;
   --font-serif-accent: var(--font-playfair), serif;
+  --font-script: var(--font-great-vibes), cursive;
   --font-sans: var(--font-geist-sans), sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -160,4 +161,95 @@
 
 ::view-transition-new(root) {
   z-index: 9999;
+}
+
+@keyframes neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 0.8;
+  }
+  20%, 24%, 55% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes neon-breathe {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.08);
+  }
+}
+
+@layer utilities {
+  .animate-neon-flicker {
+    animation: neon-flicker 4.5s infinite;
+  }
+  .animate-neon-breathe {
+    animation: neon-breathe 6s ease-in-out infinite;
+  }
+}
+
+@keyframes firework-ring {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.65;
+  }
+  18%, 100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes firework-spark {
+  0% {
+    transform: translate(0, 0) scale(0.3);
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+  }
+  6% {
+    opacity: 1;
+  }
+  22% {
+    transform: translate(var(--tx), var(--ty)) scale(1.1);
+    opacity: 1;
+    animation-timing-function: linear;
+  }
+  48% {
+    transform: translate(
+        calc(var(--tx) * 1.12),
+        calc(var(--ty) + var(--fall) * 0.22)
+      )
+      scale(0.95);
+    opacity: 0.85;
+    animation-timing-function: linear;
+  }
+  74% {
+    transform: translate(
+        calc(var(--tx) * 1.18),
+        calc(var(--ty) + var(--fall) * 0.58)
+      )
+      scale(0.7);
+    opacity: 0.45;
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: translate(
+        calc(var(--tx) * 1.22),
+        calc(var(--ty) + var(--fall))
+      )
+      scale(0.2);
+    opacity: 0;
+  }
+}
+
+@layer utilities {
+  .animate-firework-ring {
+    animation: firework-ring 2.2s ease-out infinite;
+  }
+  .animate-firework-spark {
+    animation: firework-spark 2.2s infinite;
+  }
 }
