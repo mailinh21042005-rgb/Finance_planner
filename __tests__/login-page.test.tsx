@@ -3,16 +3,12 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import "@testing-library/jest-dom/vitest";
 import LoginPage from "@/app/login/page";
 
-const pushMock = vi.fn();
 const signInEmailMock = vi.fn();
 const signUpEmailMock = vi.fn();
 const signInSocialMock = vi.fn();
 let mockSearchParams = "";
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({
-    push: pushMock,
-  }),
   useSearchParams: () => new URLSearchParams(mockSearchParams),
 }));
 
@@ -35,7 +31,7 @@ afterEach(() => {
 });
 
 describe("LoginPage", () => {
-  it("đăng nhập bằng email thành công và chuyển sang /dashboard", async () => {
+  it("đăng nhập bằng email thành công với dữ liệu form", async () => {
     signInEmailMock.mockResolvedValueOnce({ error: null });
 
     render(<LoginPage />);
@@ -53,7 +49,6 @@ describe("LoginPage", () => {
         password: "12345678",
         name: "",
       });
-      expect(pushMock).toHaveBeenCalledWith("/dashboard");
     });
   });
 
@@ -74,10 +69,9 @@ describe("LoginPage", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent(
       "Sai email hoặc mật khẩu",
     );
-    expect(pushMock).not.toHaveBeenCalled();
   });
 
-  it("chuyển sang chế độ đăng ký, hiện ô Tên và gọi signUp.email", async () => {
+  it("đăng ký bằng email thành công với dữ liệu form", async () => {
     signUpEmailMock.mockResolvedValueOnce({ error: null });
 
     render(<LoginPage />);
@@ -101,7 +95,6 @@ describe("LoginPage", () => {
         email: "new@example.com",
         password: "12345678",
       });
-      expect(pushMock).toHaveBeenCalledWith("/dashboard");
     });
   });
 

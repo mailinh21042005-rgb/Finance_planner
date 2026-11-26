@@ -65,26 +65,30 @@ export default function RootLayout({
       lang="vi"
       suppressHydrationWarning
       className={cn(
-        "font-sans",
+        "overflow-x-clip font-sans",
         geist.variable,
         oswald.variable,
         playfairDisplay.variable,
         greatVibes.variable,
       )}
     >
-      <body className="min-h-screen overflow-x-hidden bg-background text-foreground antialiased">
+      <body className="min-h-screen w-full overflow-x-clip bg-background text-foreground antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative isolate min-h-screen">
+          <div className="relative isolate min-h-screen overflow-x-clip">
             <NeonBackground />
             <LightFireworksBackground />
-            <Navbar />
-            <div className="pb-20 md:pb-0">{children}</div>
-            <MobileBottomNav />
+            <div className="relative z-40">
+              <Navbar />
+            </div>
+            <div className="relative z-10 pb-20 md:pb-0">{children}</div>
+            <div className="relative z-40">
+              <MobileBottomNav />
+            </div>
           </div>
           <Toaster richColors position="top-right" />
         </ThemeProvider>

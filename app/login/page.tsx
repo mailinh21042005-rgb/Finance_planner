@@ -1,12 +1,11 @@
 "use client";
 import { Suspense, useState, type FormEvent } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { authClient } from "../../lib/auth-client";
 import { LoadingButton } from "../../components/loading-button";
 import { ScrollReveal } from "@/components/scroll-reveal";
 
 function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [isSignUp, setIsSignUp] = useState(
     searchParams.get("mode") === "signup",
@@ -39,7 +38,9 @@ function LoginForm() {
         setError(authError.message ?? `${label} thất bại`);
         return;
       }
-      router.push("/dashboard");
+      // Reload the document so mobile browsers recalculate the viewport after authentication.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+      window.location.assign("/dashboard");
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : `${label} thất bại`);
     } finally {
@@ -76,11 +77,11 @@ function LoginForm() {
       className="grid max-w-sm gap-2 p-8">
       <h1 className="text-2xl font-bold">{label}</h1>
       {isSignUp && (
-        <input name="name" placeholder="Tên" />
+        <input name="name" placeholder="Tên" className="text-base md:text-sm" />
       )}
-      <input name="email" placeholder="Email" />
+      <input name="email" placeholder="Email" className="text-base md:text-sm" />
       <input name="password" type="password"
-        placeholder="Mật khẩu (≥ 8 ký tự)" />
+        placeholder="Mật khẩu (≥ 8 ký tự)" className="text-base md:text-sm" />
       {error && <p role="alert">{error}</p>}
       <LoadingButton
         type="submit"

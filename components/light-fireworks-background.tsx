@@ -107,7 +107,7 @@ export function LightFireworksBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 block overflow-hidden dark:hidden"
+      className="pointer-events-none fixed inset-0 z-0 block overflow-hidden dark:hidden"
     >
       {BURSTS.map((burst, burstIndex) => {
         const baseDelay = Number.parseFloat(burst.delay);
