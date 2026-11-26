@@ -9,6 +9,8 @@ import { PwaRegister } from "@/components/pwa-register";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { NeonBackground } from "@/components/neon-background";
 import { LightFireworksBackground } from "@/components/light-fireworks-background";
+import { GalaxyBackground } from "@/components/galaxy-background";
+import { DawnSkyBackground } from "@/components/dawn-sky-background";
 
 const geist = Geist({
   subsets: ["latin", "vietnamese"],
@@ -80,6 +82,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="relative isolate min-h-screen overflow-x-clip">
+            <GalaxyBackground />
+            <DawnSkyBackground />
             <NeonBackground />
             <LightFireworksBackground />
             <div className="relative z-40">

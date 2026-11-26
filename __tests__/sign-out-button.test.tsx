@@ -3,14 +3,14 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import "@testing-library/jest-dom/vitest";
 import { SignOutButton } from "@/app/transactions/sign-out-button";
 
-const pushMock = vi.fn();
+const replaceMock = vi.fn();
 const refreshMock = vi.fn();
 const signOutMock = vi.fn();
 const toastErrorMock = vi.fn();
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
-    push: pushMock,
+    replace: replaceMock,
     refresh: refreshMock,
   }),
 }));
@@ -33,7 +33,7 @@ afterEach(() => {
 });
 
 describe("SignOutButton", () => {
-  it("gọi signOut, chuyển về /login và refresh khi đăng xuất thành công", async () => {
+  it("gọi signOut, chuyển về trang chủ và refresh khi đăng xuất thành công", async () => {
     signOutMock.mockResolvedValueOnce({ error: null });
 
     render(<SignOutButton />);
@@ -41,7 +41,7 @@ describe("SignOutButton", () => {
 
     await waitFor(() => {
       expect(signOutMock).toHaveBeenCalledTimes(1);
-      expect(pushMock).toHaveBeenCalledWith("/login");
+      expect(replaceMock).toHaveBeenCalledWith("/");
       expect(refreshMock).toHaveBeenCalledTimes(1);
     });
     expect(toastErrorMock).not.toHaveBeenCalled();
@@ -58,7 +58,7 @@ describe("SignOutButton", () => {
     await waitFor(() => {
       expect(toastErrorMock).toHaveBeenCalledWith("Phiên đăng nhập không hợp lệ");
     });
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(replaceMock).not.toHaveBeenCalled();
     expect(refreshMock).not.toHaveBeenCalled();
   });
 
@@ -71,6 +71,6 @@ describe("SignOutButton", () => {
     await waitFor(() => {
       expect(toastErrorMock).toHaveBeenCalledWith("Mất kết nối mạng");
     });
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(replaceMock).not.toHaveBeenCalled();
   });
 });

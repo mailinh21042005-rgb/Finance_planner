@@ -1,5 +1,6 @@
+import { prisma } from "@/lib/prisma";
 import { requireUser } from "../../lib/dal";
-import { ProfileNameForm } from "./profile-name-form";
+import { ProfileViewClient } from "./profile-view";
 import { ScrollReveal } from "@/components/scroll-reveal";
 
 export const metadata = {
@@ -8,17 +9,17 @@ export const metadata = {
 
 export default async function ProfilePage() {
   const user = await requireUser();
+  const [transactionCount, wishlistCount] = await Promise.all([
+    prisma.transaction.count({ where: { userId: user.id } }),
+    prisma.wishlistItem.count({ where: { userId: user.id } }),
+  ]);
+
   return (
-    <main className="mx-auto grid w-full max-w-md gap-4 p-4 sm:p-8">
-      <ScrollReveal>
-        <h1 className="text-2xl font-bold">Hồ sơ</h1>
-      </ScrollReveal>
-      <ScrollReveal delay={100}>
-        <p>Email: {user.email}</p>
-      </ScrollReveal>
-      <ScrollReveal delay={200}>
-        <ProfileNameForm initialName={user.name ?? ""} />
-      </ScrollReveal>
-    </main>
+    <ScrollReveal>
+      <ProfileViewClient
+        user={{ name: user.name ?? "", email: user.email }}
+        stats={{ transactionCount, wishlistCount }}
+      />
+    </ScrollReveal>
   );
 }

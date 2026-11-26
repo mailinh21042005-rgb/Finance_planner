@@ -48,7 +48,9 @@ export function LoadingButton({
           />
         </svg>
       )}
-      <span>{isLoading ? loadingText ?? children : children}</span>
+      <span className="inline-flex items center justify-center gap-2">
+        {isLoading ? loadingText ?? children : children}
+      </span>
     </button>
   );
 }

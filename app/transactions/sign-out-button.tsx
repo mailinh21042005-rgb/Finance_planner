@@ -21,7 +21,7 @@ export function SignOutButton() {
         return;
       }
 
-      router.push("/login");
+      router.replace("/");
       router.refresh();
     } catch (cause) {
       toast.error(

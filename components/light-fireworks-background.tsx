@@ -1,4 +1,7 @@
+"use client";
+
 import type { CSSProperties } from "react";
+import { usePathname } from "next/navigation";
 
 type SparkStyle = CSSProperties & {
   "--tx": string;
@@ -104,6 +107,10 @@ const SPARKS = [
 ];
 
 export function LightFireworksBackground() {
+  const pathname = usePathname();
+
+  if (pathname !== "/") return null;
+
   return (
     <div
       aria-hidden="true"

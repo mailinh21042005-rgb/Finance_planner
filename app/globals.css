@@ -253,3 +253,81 @@
     animation: firework-spark 2.2s infinite;
   }
 }
+
+@keyframes star-twinkle {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes nebula-drift {
+  0%, 100% {
+    opacity: 0.55;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate3d(18px, -12px, 0) scale(1.06);
+  }
+}
+
+@keyframes shooting-star {
+  0% {
+    transform: rotate(-32deg) translateX(0);
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.95;
+  }
+  16% {
+    transform: rotate(-32deg) translateX(-340px);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(-32deg) translateX(-340px);
+    opacity: 0;
+  }
+}
+
+@keyframes cloud-drift {
+  0%, 100% {
+    transform: translateX(-28px);
+  }
+  50% {
+    transform: translateX(32px);
+  }
+}
+
+@keyframes sun-sparkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.65) rotate(0deg);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15) rotate(22deg);
+  }
+}
+
+@layer utilities {
+  .animate-star-twinkle {
+    animation: star-twinkle 3.2s ease-in-out infinite;
+  }
+  .animate-nebula-drift {
+    animation: nebula-drift 10s ease-in-out infinite;
+  }
+  .animate-shooting-star {
+    animation: shooting-star 8s ease-in infinite;
+  }
+  .animate-cloud-drift {
+    animation: cloud-drift 18s ease-in-out infinite;
+  }
+  .animate-sun-sparkle {
+    animation: sun-sparkle 3.6s ease-in-out infinite;
+  }
+}
