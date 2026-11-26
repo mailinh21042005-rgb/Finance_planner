@@ -11,8 +11,19 @@
 ---
 
 ## Ảnh chụp màn hình
-
-
+- Máy tính:
+  - **Giao diện chính trước khi đăng nhập**
+    - Chế độ tối: <img width="1896" height="867" alt="image" src="https://github.com/user-attachments/assets/96a9a04e-4114-4efc-a6c2-9af509c42f18" />
+    - Chế độ sáng: <img width="1901" height="860" alt="image" src="https://github.com/user-attachments/assets/4932f596-7933-48fc-bbc0-4df473ca9776" />
+  - **Giao diện đăng ký/đăng nhập**
+    - Chế độ tối: <img width="1896" height="871" alt="image" src="https://github.com/user-attachments/assets/85c4ef8c-2955-4052-8816-0ce6e6ead8b0" />
+    - Chế độ sáng: <img width="1902" height="868" alt="image" src="https://github.com/user-attachments/assets/f2df1d3a-0acb-4aa4-8a18-593e34ad7c1e" />
+  - **Giao diện hoạt động của web**
+    - Chế độ tối: <img width="1900" height="878" alt="image" src="https://github.com/user-attachments/assets/b1c4c72e-b8a8-4025-9613-98afbea55e84" />
+    - Chế độ sáng: <img width="1898" height="876" alt="image" src="https://github.com/user-attachments/assets/e3c8602a-bd41-413a-bedd-2a7f3a651048" />
+- Điện thoại:
+  - Chế độ sáng: <img width="734" height="839" alt="image" src="https://github.com/user-attachments/assets/4c154b0c-0ca6-4caa-b109-21d7c24170d5" />
+  - Chế độ tối: <img width="747" height="844" alt="image" src="https://github.com/user-attachments/assets/1270552d-55a2-43cc-949a-1cd48ad1d1a3" />
 
 ---
 
