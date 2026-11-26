@@ -35,7 +35,7 @@ describe("LoginPage", () => {
     signInEmailMock.mockResolvedValueOnce({ error: null });
 
     render(<LoginPage />);
-    fireEvent.change(screen.getByPlaceholderText("Email"), {
+    fireEvent.change(screen.getByLabelText("Email"), {
       target: { value: "user@example.com" },
     });
     fireEvent.change(screen.getByPlaceholderText("Mật khẩu (≥ 8 ký tự)"), {
@@ -58,7 +58,7 @@ describe("LoginPage", () => {
     });
 
     render(<LoginPage />);
-    fireEvent.change(screen.getByPlaceholderText("Email"), {
+    fireEvent.change(screen.getByLabelText("Email"), {
       target: { value: "wrong@example.com" },
     });
     fireEvent.change(screen.getByPlaceholderText("Mật khẩu (≥ 8 ký tự)"), {
@@ -77,11 +77,13 @@ describe("LoginPage", () => {
     render(<LoginPage />);
     fireEvent.click(screen.getByRole("button", { name: "Tạo tài khoản" }));
 
-    expect(screen.getByRole("heading", { name: "Đăng ký" })).toBeInTheDocument();
-    fireEvent.change(screen.getByPlaceholderText("Tên"), {
+    expect(
+      screen.getByRole("heading", { name: "Tạo tài khoản mới" }),
+    ).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Họ và tên"), {
       target: { value: "Mai Linh" },
     });
-    fireEvent.change(screen.getByPlaceholderText("Email"), {
+    fireEvent.change(screen.getByLabelText("Email"), {
       target: { value: "new@example.com" },
     });
     fireEvent.change(screen.getByPlaceholderText("Mật khẩu (≥ 8 ký tự)"), {
@@ -103,8 +105,10 @@ describe("LoginPage", () => {
 
     render(<LoginPage />);
 
-    expect(screen.getByRole("heading", { name: "Đăng ký" })).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Tên")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Tạo tài khoản mới" }),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Họ và tên")).toBeInTheDocument();
   });
 
   it("gọi đăng nhập GitHub đúng provider và callbackURL", async () => {

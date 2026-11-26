@@ -33,6 +33,11 @@ export const wishlistSchema = z.object({
   priority: z.enum(Priority, { error: "Chọn mức ưu tiên" }).default(Priority.MEDIUM),
 });
 
+export const profileNameSchema = z.string()
+  .trim()
+  .min(1, { error: "Tên hiển thị không được để trống" })
+  .max(120, { error: "Tên hiển thị tối đa 120 ký tự" });
+
 type Field = keyof z.infer<typeof transactionSchema>;
 type Values = Partial<Record<Field, string>>;
 

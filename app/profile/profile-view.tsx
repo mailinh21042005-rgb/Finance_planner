@@ -13,12 +13,11 @@ import {
   ReceiptText,
   Save,
   ShieldCheck,
-  Sparkles,
   Sun,
   User,
 } from "lucide-react";
 import { LoadingButton } from "@/components/loading-button";
-import { authClient } from "@/lib/auth-client";
+import { updateProfileName } from "./actions";
 
 type ProfileStats = {
   transactionCount: number;
@@ -49,9 +48,9 @@ export function ProfileViewClient({
   const router = useRouter();
 
   async function onSaveName(nextName: string) {
-    const { error } = await authClient.updateUser({ name: nextName });
-    if (error) {
-      throw new Error(error.message ?? "Không thể cập nhật tên.");
+    const result = await updateProfileName(nextName);
+    if (!result.ok) {
+      throw new Error(result.message);
     }
     router.refresh();
   }
@@ -181,6 +180,7 @@ function ProfileView({ user, stats, onSaveName }: ProfileViewProps) {
                   name="name"
                   type="text"
                   required
+                  maxLength={120}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Nhập tên hiển thị của bạn"
