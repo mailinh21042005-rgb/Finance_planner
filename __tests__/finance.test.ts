@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   analyzeSpendingTrend,
   buildMonthlyReport,
+  calculateBalance,
   formatCompactVND,
   type MonthlySummary,
   crossedMilestones,
@@ -13,6 +14,23 @@ import {
   transactionFilterSchema,
   transactionSchema,
 } from "../lib/validation";
+
+describe("calculateBalance", () => {
+  it("tính thu trừ chi", () => {
+    expect(calculateBalance([
+      { type: "INCOME", amount: 1_500_000 },
+      { type: "EXPENSE", amount: 400_000 },
+      { type: "EXPENSE", amount: 100_000 },
+    ])).toBe(1_000_000);
+  });
+
+  it("trả về số âm khi chi nhiều hơn thu", () => {
+    expect(calculateBalance([
+      { type: "INCOME", amount: 200_000 },
+      { type: "EXPENSE", amount: 500_000 },
+    ])).toBe(-300_000);
+  });
+});
 
 describe("wishlistProgress", () => {
   it("tính phần trăm và làm tròn xuống", () => {
