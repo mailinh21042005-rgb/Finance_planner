@@ -5,7 +5,7 @@
 - **Code được triển khai tại:** https://financeplannerweb.vercel.app/
 - **Tài khoản demo:**
   - **Email:** `demo@phy10615.vn`
-  - **Mật khẩu:** `<123456789>`
+  - **Mật khẩu:** `<O3277O77O3>`
   - *(Có thể đăng ký mới bằng Email hoặc đăng nhập nhanh qua GitHub OAuth)*
 
 ---
